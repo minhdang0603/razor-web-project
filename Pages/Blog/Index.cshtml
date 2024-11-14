@@ -1,0 +1,50 @@
+﻿@page
+@model RazorWeb.Pages.Blog.IndexModel
+
+@{
+	ViewData["Title"] = "Posts List";
+	var i = 0;
+}
+
+<h1>Danh sách bài viết (@Model.Article.Count)</h1>
+<form method="get" asp-page="./Index">
+	<label class="form-label">Tìm kiếm</label>
+	<input class="form-control-sm" name="SearchString" value="" />
+	<button class="btn btn-sm btn-primary" type="submit">Tìm</button>
+</form>
+<p>
+	<a class="btn btn-primary" asp-page="Create">Tạo bài viết mới</a>
+</p>
+<table class="table">
+	<thead>
+		<tr>
+			<th>STT</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Article[0].Title)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Article[0].Created)
+			</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model.Article)
+		{
+			<tr>
+				<td>@(++i)</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Title)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Created)
+				</td>
+				<td>
+					<a class="btn btn-warning" asp-page="./Edit" asp-route-id="@item.Id">Chỉnh sửa</a> |
+					<a class="btn btn-primary" asp-page="./Details" asp-route-id="@item.Id">Xem</a> |
+					<a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.Id">Xóa</a>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
