@@ -1,0 +1,66 @@
+﻿@page
+@model RazorWeb.Pages.Blog.IndexModel
+
+@{
+	ViewData["Title"] = "Danh sách bài viết";
+	var i = 0;
+}
+
+<h1>Danh sách bài viết (@Model.Article.Count)</h1>
+
+<form method="get" asp-page="IndexModel">
+	<div class="form-group">
+		<label>Tìm kiếm</label>
+		<input type="text" class="form-control-sm" value="" name="SearchString" />
+		<button type="submit" class="btn btn-sm btn-primary">Tìm kiếm</button>
+	</div>
+</form>
+
+<p>
+	<a class="btn btn-primary" asp-page="Create">Tạo mới</a>
+</p>
+<table class="table">
+	<thead>
+		<tr>
+			<th>STT</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Article[0].Title)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Article[0].Created)
+			</th>
+			<th>Chức năng</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model.Article)
+		{
+			<tr>
+				<td>@(++i)</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Title)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Created)
+				</td>
+				<td>
+					<a asp-page="./Edit" asp-route-id="@item.Id">Chỉnh sửa</a> |
+					<a asp-page="./Details" asp-route-id="@item.Id">Chi tiết</a> |
+					<a asp-page="./Delete" asp-route-id="@item.Id">Xóa</a>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
+
+@{
+	var pagingModel = new RazorWeb.Pages.Shared._PagingModel
+			{
+				currentPage = Model.currentPage,
+				countPages = Model.countPage,
+				generateUrl = (page) => Url.Page("/Blog/Index", new { p = page })
+			};
+}
+
+<partial name="_Paging" model="@pagingModel" />
+
