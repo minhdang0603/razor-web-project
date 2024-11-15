@@ -24,12 +24,14 @@ namespace RazorWeb.Migrations
 
             modelBuilder.Entity("RazorWeb.Models.Article", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasColumnName("id");
 
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
                     b.Property<string>("Content")
-                        .IsRequired()
                         .HasColumnType("ntext")
                         .HasColumnName("content");
 

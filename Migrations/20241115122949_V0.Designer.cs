@@ -12,8 +12,8 @@ using RazorWeb.Models;
 namespace RazorWeb.Migrations
 {
     [DbContext(typeof(MyBlogContext))]
-    [Migration("20241112141750_initdb")]
-    partial class initdb
+    [Migration("20241115122949_V0")]
+    partial class V0
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,12 +27,14 @@ namespace RazorWeb.Migrations
 
             modelBuilder.Entity("RazorWeb.Models.Article", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasColumnName("id");
 
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
                     b.Property<string>("Content")
-                        .IsRequired()
                         .HasColumnType("ntext")
                         .HasColumnName("content");
 
